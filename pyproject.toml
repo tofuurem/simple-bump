@@ -37,4 +37,4 @@ sp = "simple_bump.cli.main:cli"
 changelog = "https://github.com/python-semantic-release/python-semantic-release/blob/master/CHANGELOG.md"
 
 [tool.sp]
-version = "0.1.0"
+version = "0.1.1"
