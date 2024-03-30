@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "simple_bump"
-version = "0.1.0"
+version = "0.1.2"
 description = "Simple Semantic Versioning for Python projects"
 requires-python = ">=3.10"
 classifiers = [
@@ -37,4 +37,4 @@ sp = "simple_bump.cli.main:cli"
 changelog = "https://github.com/tofuurem/simple-bump/blob/main/CHANGELOG.md"
 
 [tool.sp]
-version = "0.1.1"
+version = "0.1.2"
