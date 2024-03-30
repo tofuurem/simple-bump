@@ -35,7 +35,7 @@ class FilesOperation:
             raise ex
         click.echo(f"Bumped changes from {tool['sp']['version']} -> {new_version} tag.")
 
-        if 'project' in data or 'version' in data['project']:
+        if data.get('project') is not None:
             data['project']['version'] = new_version
 
         data['tool']['sp']['version'] = new_version
