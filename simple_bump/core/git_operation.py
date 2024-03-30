@@ -1,8 +1,8 @@
 from pathlib import Path
 from typing import NoReturn
 
-from git import Repo
 import click
+from git import Repo
 
 from simple_bump.core.types import VerVal
 
@@ -54,7 +54,7 @@ class GitOperations:
         # todo: get commit message from config
         self._repo.index.commit('Bump version {old} -> {new}'.format(old=old, new=new))
         # todo: get tag type from config
-        click.echo(f"Committed files")
+        click.echo("Committed files")
 
     def _tag(self, new: str) -> NoReturn:
         new_tag = f"v{new}"

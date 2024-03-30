@@ -34,7 +34,7 @@ text = "MIT"
 sp = "simple_bump.cli.main:cli"
 
 [project.urls]
-changelog = "https://github.com/python-semantic-release/python-semantic-release/blob/master/CHANGELOG.md"
+changelog = "https://github.com/tofuurem/simple-bump/blob/main/CHANGELOG.md"
 
 [tool.sp]
 version = "0.1.1"

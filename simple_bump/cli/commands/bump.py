@@ -1,11 +1,5 @@
-import os
-import sys
-from pathlib import Path
-
 import click
 
-from simple_bump.core.files_operation import FilesOperation
-from simple_bump.core.git_operation import GitOperations
 from simple_bump.core.main import Core
 from simple_bump.core.types import VerVal
 

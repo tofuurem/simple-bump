@@ -1,11 +1,11 @@
-import sys
 from functools import cached_property
 from pathlib import Path
 
+import click
 import semver
 import tomlkit
-import click
 
+from simple_bump.core.errors import NotFoundConfigException
 from simple_bump.core.types import VerVal
 
 
@@ -26,14 +26,17 @@ class FilesOperation:
 
         if tool is None or tool.get('sp') is None:
             click.echo(f'Config file is empty: {self.project_toml}', err=True)
-
+            raise NotFoundConfigException
         try:
             old = tool['sp']['version']
             new_version = str(semver.VersionInfo.parse(old).next_version(part=version_bump))
         except Exception as ex:
             click.echo(f'No version in config, or bad style: {ex}', err=True)
-            sys.exit(1)
+            raise ex
         click.echo(f"Bumped changes from {tool['sp']['version']} -> {new_version} tag.")
+
+        if 'project' in data or 'version' in data['project']:
+            data['project']['version'] = new_version
 
         data['tool']['sp']['version'] = new_version
         with open(self.project_toml, 'w', encoding='utf-8') as toml_file:
