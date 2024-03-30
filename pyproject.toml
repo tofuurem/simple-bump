@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61.0.0", "wheel"]
+requires = [ "setuptools>=61.0.0", "wheel",]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,19 +7,15 @@ name = "simple_bump"
 version = "0.0.0"
 description = "Simple Semantic Versioning for Python projects"
 requires-python = ">=3.10"
-license = { text = "MIT" }
-classifiers = [
-  "Programming Language :: Python",
-  "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: 3.12",
-]
+classifiers = [ "Programming Language :: Python", "Programming Language :: Python :: 3", "Programming Language :: Python :: 3.10", "Programming Language :: Python :: 3.11", "Programming Language :: Python :: 3.12",]
 readme = "README.rst"
-authors = [{ name = "Aleksandr", email = "rabbit_1399@icloud.com" }]
-dependencies = [
-  "click>=8,<9",
-]
+dependencies = [ "click>=8,<9",]
+[[project.authors]]
+name = "Aleksandr"
+email = "rabbit_1399@icloud.com"
+
+[project.license]
+text = "MIT"
 
 [project.scripts]
 sp = "simple_bump.cli.main:cli"
@@ -27,6 +23,5 @@ sp = "simple_bump.cli.main:cli"
 [project.urls]
 changelog = "https://github.com/python-semantic-release/python-semantic-release/blob/master/CHANGELOG.md"
 
-
 [tool.sp]
-version = '0.0.0'
+version = "0.1.0"
