@@ -64,7 +64,7 @@ class FilesOperation:
             raise ex
         click.echo(f"Bumped changes from {self.sp_config.version} -> {str(new_version)} tag.")
         # todo: update other versions in files
-        if 'project' in self._data or 'version' in self._data['project']:
+        if 'project' in self._data and 'version' in self._data['project']:
             self._data['project']['version'] = str(new_version)
 
         self._data['tool']['sp']['version'] = str(new_version)
