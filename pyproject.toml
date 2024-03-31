@@ -10,7 +10,6 @@ requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
 ]
@@ -18,7 +17,6 @@ readme = "README.md"
 dependencies = [
     "click>=8,<9",
     "tomlkit>=0.12.0,<1.0.0",
-    "pydantic>=2.0.0,<3.0.0",
     "gitpython>=3.0.0,<4.0.0",
     "semver>=3.0.0,<4.0.0"
 ]
@@ -38,3 +36,11 @@ changelog = "https://github.com/tofuurem/simple-bump/blob/main/CHANGELOG.md"
 
 [tool.sp]
 version = "0.1.2"
+version_fmt = "v{major}.{minor}.{patch}"
+commit_msg = "Bump version {old} -> {new}"
+version_files = []
+
+[tool.sp.bump_levels]
+major = []
+minor = ["feat"]
+patch = ["fix"]

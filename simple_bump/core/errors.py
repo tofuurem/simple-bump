@@ -1,2 +1,2 @@
-class NotFoundConfigException(Exception):
+class NotFoundConfigError(Exception):
     pass

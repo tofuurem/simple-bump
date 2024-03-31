@@ -7,14 +7,17 @@ click==8.1.7
 gitdb==4.0.11
     # via gitpython
 gitpython==3.1.42
+    # via simple-bump
 pydantic==2.6.4
 pydantic-core==2.16.3
     # via pydantic
 ruff==0.3.4
 semver==3.0.2
+    # via simple-bump
 smmap==5.0.1
     # via gitdb
 tomlkit==0.12.4
+    # via simple-bump
 typing-extensions==4.10.0
     # via
     #   pydantic
