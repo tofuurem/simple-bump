@@ -5,8 +5,7 @@ from pathlib import Path
 import click
 
 from simple_bump.cli.dto import BumpParams
-from simple_bump.core.operations.files import FilesOperation
-from simple_bump.core.operations.git import GitOperations
+from simple_bump.core.operations import FilesOperation, GitOperations
 
 
 class Handler:
@@ -27,8 +26,8 @@ class Handler:
         if bp.push:
             self._gio.push_changes()
 
-    def push(self, tags: bool = False) -> None:
-        self._gio.push_changes(tags)
+    def push(self) -> None:
+        self._gio.push_changes()
 
     def init_config(self, base: bool) -> None:
         self._fio.write_config(base)

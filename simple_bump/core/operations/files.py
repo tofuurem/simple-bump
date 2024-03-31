@@ -41,8 +41,7 @@ class FilesOperation:
     def get_spconfig(self, raised: bool = False) -> SPConfig:
         try:
             sp_config = SPConfig(**self._data['tool']['sp'])
-        except KeyError as ex:
-            # click.echo(f'No version in config, or bad style: {ex}', err=True)
+        except KeyError:
             if raised:
                 raise NotFoundConfigError
             sp_config = SPConfig()

@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import NoReturn
 
 import click
-from git import Repo, RemoteProgress
+from git import RemoteProgress, Repo
 from semver import Version
 
 from simple_bump.core.config.dto import SPConfig
@@ -30,30 +30,25 @@ class GitOperations:
             message = commit.message.lower()
             # if no prefix -> it's bad commit message
             if ':' not in message:
-                click.echo('Bad commit message')
-                return None
+                continue
 
             # breaking changes is always major
             if 'breaking' in message:
-                click.echo('found breaking changes')
                 return VerVal.major
 
             lv_prefix = levels.get(message.split(':')[0])
-            click.echo(lv_prefix)
             if lv_prefix is not None:
                 ver = lv_prefix
+        return ver
 
-        return None
-
-    def push_changes(self, tags: bool = True) -> NoReturn:
+    def push_changes(self) -> NoReturn:
         # only local work
         # todo: create git push by gitlab token
         progress = RemoteProgress()
         # todo: get remote repo from config ?
         origin = self._repo.remote(name='origin')
         origin.push(progress=progress)
-        if tags:
-            origin.push(progress=progress, tags=True)
+        origin.push(progress=progress, tags=True)
         click.echo("Changes and tags have been pushed to the remote repository.")
 
     def commit_and_tag(self, old: str, new: Version, files_path: list[Path]) -> NoReturn:

@@ -2,24 +2,23 @@ from functools import cached_property
 
 from pydantic import BaseModel, Field
 
-from simple_bump.core.config.constants import DEFAULT_BUMP_LEVELS
 from simple_bump.core.types import VerVal
 
 
 class BumpLevels(BaseModel):
-    major: list[str] = Field(default_factory=lambda: DEFAULT_BUMP_LEVELS[VerVal.major])
-    minor: list[str] = Field(default_factory=lambda: DEFAULT_BUMP_LEVELS[VerVal.minor])
-    patch: list[str] = Field(default_factory=lambda: DEFAULT_BUMP_LEVELS[VerVal.patch])
+    major: list[str] = Field(default=[])
+    minor: list[str] = Field(default=['feat'])
+    patch: list[str] = Field(default=['fix'])
 
     @cached_property
     def revert_levels(self) -> dict[str, VerVal]:
         data = {}
         for lvl in self.major:
-            data[lvl]: VerVal.major
+            data[lvl] = VerVal.major
         for lvl in self.minor:
-            data[lvl]: VerVal.minor
+            data[lvl] = VerVal.minor
         for lvl in self.patch:
-            data[lvl]: VerVal.patch
+            data[lvl] = VerVal.patch
         return data
 
 
