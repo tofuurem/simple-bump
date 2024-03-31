@@ -57,7 +57,7 @@ class GitOperations:
         match self._sp.git.hvcs:
             case HVCS.gitlab:
                 new_url = repo.url.replace('https://', f'https://oauth:{self._sp.git.token}@')
-                repo.set_url(new_url, name=self._sp.git.remote)
+                repo.set_url(new_url)
         try:
             repo.push(progress=self._progress)
             repo.push(progress=self._progress, tags=True)
