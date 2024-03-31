@@ -2,17 +2,21 @@ from pathlib import Path
 from typing import NoReturn
 
 import click
-from git import RemoteProgress, Repo
+from git import GitCommandError, Repo
 from semver import Version
 
 from simple_bump.core.config.dto import SPConfig
-from simple_bump.core.types import VerVal
+from simple_bump.core.config.enums import HVCS, VerVal
+from simple_bump.core.errors import NotFoundTokenError
+from simple_bump.core.operations.progress_bar import GitRemoteProgress
 
 
 class GitOperations:
     def __init__(self, repo_path: Path | str, sp_config: SPConfig) -> None:
         self._repo = Repo(repo_path)
         self._sp = sp_config
+
+        self._progress = GitRemoteProgress()
 
     @property
     def determine_version_bump(self) -> VerVal | None:
@@ -42,14 +46,34 @@ class GitOperations:
         return ver
 
     def push_changes(self) -> NoReturn:
-        # only local work
-        # todo: create git push by gitlab token
-        progress = RemoteProgress()
-        # todo: get remote repo from config ?
-        origin = self._repo.remote(name='origin')
-        origin.push(progress=progress)
-        origin.push(progress=progress, tags=True)
+        if not self.simple_push():
+            self.push_by_token()
         click.echo("Changes and tags have been pushed to the remote repository.")
+
+    def push_by_token(self) -> bool:
+        repo = self._repo.remote(name=self._sp.git.remote)
+        if not self._sp.git.token:
+            raise NotFoundTokenError
+        match self._sp.git.hvcs:
+            case HVCS.gitlab:
+                new_url = repo.url.replace('https://', f'https://oauth:{self._sp.git.token}@')
+                repo.set_url(new_url, name=self._sp.git.remote)
+        try:
+            repo.push(progress=self._progress)
+            repo.push(progress=self._progress, tags=True)
+        except GitCommandError as gce:
+            click.echo(gce, err=True)
+            return False
+        return True
+
+    def simple_push(self) -> bool:
+        try:
+            repo = self._repo.remote(name=self._sp.git.remote)
+            repo.push(progress=self._progress)
+            repo.push(progress=self._progress, tags=True)
+        except GitCommandError:
+            return False
+        return True
 
     def commit_and_tag(self, old: str, new: Version, files_path: list[Path]) -> NoReturn:
         self._repo.index.add(files_path)

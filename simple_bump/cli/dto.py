@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from simple_bump.core.types import VerVal
+from simple_bump.core.config.enums import VerVal
 
 
 @dataclass

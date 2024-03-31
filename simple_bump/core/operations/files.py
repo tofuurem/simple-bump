@@ -7,8 +7,8 @@ import tomlkit
 
 from simple_bump.core.config.constants import DEFAULT_CONFIG_FILE
 from simple_bump.core.config.dto import SPConfig
+from simple_bump.core.config.enums import VerVal
 from simple_bump.core.errors import NotFoundConfigError
-from simple_bump.core.types import VerVal
 
 
 class FilesOperation:
