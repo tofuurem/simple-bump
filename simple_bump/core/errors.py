@@ -1,2 +1,6 @@
-class NotFoundConfigException(Exception):
+class NotFoundConfigError(Exception):
+    pass
+
+
+class NotFoundTokenError(Exception):
     pass

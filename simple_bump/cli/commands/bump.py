@@ -1,7 +1,7 @@
 import click
 
-from simple_bump.core.main import Core
-from simple_bump.core.types import VerVal
+from simple_bump.cli.dto import BumpParams
+from simple_bump.core.handler import Handler
 
 
 @click.command()
@@ -16,22 +16,5 @@ def bump(
     push: bool
 ) -> None:
     """Bumps the project version."""
-    core = Core()
-    if major:
-        click.echo("Major version bumped.")
-        new_version = VerVal.major
-    elif minor:
-        click.echo("Minor version bumped.")
-        new_version = VerVal.minor
-    elif patch:
-        click.echo("Patch version bumped.")
-        new_version = VerVal.patch
-    else:
-        new_version = core.go.determine_version_bump
-    if new_version is None:
-        click.echo('No changes to bump')
-        return
-    old, new = core.fo.update_version_in_files(new_version)
-    core.go.commit_and_tag(old, new, [core.fo.project_toml])
-    if push:
-        core.go.push_changes()
+    handler = Handler()
+    handler.bump(BumpParams(major, minor, patch, push))
